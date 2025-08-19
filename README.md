@@ -20,8 +20,6 @@ That's it! Your panoramas will be in `./output/` folder.
 - 4 Docker containers running in parallel
 - Each container processes different photo sessions
 - Direct file sharing via mounted volumes
-- No overhead from APIs, queues, or databases
-
 ```
 Your Photos → [Container 1] → Panorama 1, 2, 3
            → [Container 2] → Panorama 4, 5, 6  
@@ -29,12 +27,6 @@ Your Photos → [Container 1] → Panorama 1, 2, 3
            → [Container 4] → Panorama 10, 11
 ```
 
-## 📊 Performance
-
-**Your 11 sessions example:**
-- **Sequential**: ~22 minutes (2 min per session)
-- **This parallel setup**: ~6 minutes (4 sessions processed simultaneously)
-- **Speed improvement**: 4x faster
 
 ## 🔧 Manual Usage
 
@@ -131,18 +123,6 @@ docker logs panorama_stitcher_1
 docker exec -it panorama_stitcher_1 bash
 ```
 
-## 📊 Monitoring Progress
-
-```bash
-# Watch output directory
-watch "find ./output -name '*.tif' | wc -l"
-
-# View container logs in real-time
-docker logs -f panorama_stitcher_1
-
-# Check specific container
-docker logs -f panorama_stitcher_1
-```
 
 ## 🔍 Troubleshooting
 
@@ -172,24 +152,7 @@ docker exec panorama_stitcher_1 ./stitch.sh templates/project1.pto test_output /
 # Or increase Docker memory limit in Docker Desktop
 ```
 
-## 🚀 Performance Tips
-
-1. **CPU Cores**: Use 1 instance per CPU core (e.g., 4 cores = 4 instances)
-2. **Memory**: Each instance uses ~2GB RAM, ensure sufficient memory
-3. **Storage**: SSD storage significantly improves processing speed
-4. **Session Size**: Smaller session batches (20-30 sessions) process faster
-
-## 📋 Requirements
-
-- **Docker & Docker Compose**
-- **CPU**: 4+ cores recommended
-- **RAM**: 8GB minimum (2GB per instance)
-- **Storage**: 10GB free space for processing
-- **OS**: Linux, macOS, or Windows with WSL2
-
-## 🎯 Real-World Usage
-
-For your 11 photo sessions:
+For your photo sessions:
 
 ```bash
 # Copy your photos
@@ -203,8 +166,3 @@ cp -r ~/photos ./input/
 # ./output/pano_20250730_103959.tif
 # ... (11 panoramas total)
 ```
-
-**Expected Processing Time:**
-- 11 sessions × 2 minutes each = 22 minutes sequential
-- With 4 parallel instances = ~6 minutes total
-- **4x speed improvement!**
