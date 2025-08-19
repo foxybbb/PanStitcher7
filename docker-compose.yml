@@ -1,0 +1,57 @@
+services:
+  # Simple parallel stitching instances
+  stitcher-1:
+    build: .
+    container_name: panorama_stitcher_1
+    volumes:
+      - ./input:/app/input:ro
+      - ./output:/app/output
+      - ./templates:/app/templates:ro
+    environment:
+      - INSTANCE_ID=1
+      - KEEP_TMP=0
+    command: ["bash", "-c", "echo 'Stitcher 1 ready.' && sleep infinity"]
+
+  stitcher-2:
+    build: .
+    container_name: panorama_stitcher_2
+    volumes:
+      - ./input:/app/input:ro
+      - ./output:/app/output
+      - ./templates:/app/templates:ro
+    environment:
+      - INSTANCE_ID=2
+      - KEEP_TMP=0
+    command: ["bash", "-c", "echo 'Stitcher 2 ready.' && sleep infinity"]
+
+  stitcher-3:
+    build: .
+    container_name: panorama_stitcher_3
+    volumes:
+      - ./input:/app/input:ro
+      - ./output:/app/output
+      - ./templates:/app/templates:ro
+    environment:
+      - INSTANCE_ID=3
+      - KEEP_TMP=0
+    command: ["bash", "-c", "echo 'Stitcher 3 ready.' && sleep infinity"]
+
+  stitcher-4:
+    build: .
+    container_name: panorama_stitcher_4
+    volumes:
+      - ./input:/app/input:ro
+      - ./output:/app/output
+      - ./templates:/app/templates:ro
+    environment:
+      - INSTANCE_ID=4
+      - KEEP_TMP=0
+    command: ["bash", "-c", "echo 'Stitcher 4 ready.' && sleep infinity"]
+
+volumes:
+  shared_output:
+    driver: local
+
+networks:
+  default:
+    name: panorama_simple

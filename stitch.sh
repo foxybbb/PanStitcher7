@@ -76,10 +76,10 @@ echo "------------------------------"
 WORKDIR="$(mktemp -d -t hugin_full_XXXXXX)"
 cleanup() {
   if [[ "${KEEP_TMP:-0}" == "1" ]]; then
-    echo "⏭  KEEP_TMP=1 — временная папка сохранена: $WORKDIR"
+    echo "KEEP_TMP=1 — временная папка сохранена: $WORKDIR"
   else
     rm -rf "$WORKDIR"
-    echo "🧹 Временные файлы удалены."
+    echo "Временные файлы удалены."
   fi
 }
 trap cleanup EXIT
@@ -232,9 +232,12 @@ awk -v map="$MAP_CC" '
 ' "$TMP_PTO" > "$TMP_PTO.new" && mv "$TMP_PTO.new" "$TMP_PTO"
 
 # ---- stitch ----
-echo "✂️  Старт прошивки панорамы..."
+echo "Старт прошивки панорамы..."
 set -x
 hugin_executor --prefix="$OUT_PREFIX" --stitching "$TMP_PTO"
 set +x
-echo "✅ Готово. Результаты: ${OUT_PREFIX}*"
+echo "Готово. Результаты: ${OUT_PREFIX}*"
 echo "TMP: $WORKDIR"
+
+# Explicit cleanup call
+cleanup
